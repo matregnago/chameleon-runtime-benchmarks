@@ -38,7 +38,7 @@ trap copyback EXIT
 
 export RESULTS_DIR="$LOCAL_RESULTS_DIR"
 mkdir -p "$RESULTS_DIR"
-cp doe_traces_poti.csv "$RESULTS_DIR/design.csv"
+cp doe/doe_traces_poti.csv "$RESULTS_DIR/design.csv"
 export DESIGN_FILE="$RESULTS_DIR/design.csv"
 
 export THREADS=19

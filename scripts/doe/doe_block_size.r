@@ -49,4 +49,6 @@ design <- fac.design(
 set.seed(1)
 design <- slice_sample(design, prop = 1)
 
-write_csv(design, "doe_block_size.csv", progress = FALSE)
+out_dir <- "doe"
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+write_csv(design, file.path(out_dir, "doe_block_size.csv"), progress = FALSE)

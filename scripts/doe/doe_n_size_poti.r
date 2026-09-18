@@ -48,5 +48,7 @@ design <- fac.design(
 set.seed(1)
 design <- slice_sample(design, prop = 1)
 
-out <- "doe_n_size_poti.csv"
+out_dir <- "doe"
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+out <- file.path(out_dir, "doe_n_size_poti.csv")
 write_csv(design, out, progress = FALSE)

@@ -44,7 +44,8 @@ Isso gera um arquivo chamado `part1.pdf`.
 ## DOE e Análise dos Dados
 Os scripts estão na pasta `scripts`:
 
-- `scripts/run.sh` — executa o design (`DESIGN_FILE`) para um runtime (chamado pelos jobs em `slurm/`);
+- `scripts/doe/` — gera os designs em `doe/*.csv` (rode a partir da raiz do repositório, ex.: `Rscript scripts/doe/doe_block_size.r`);
+- `scripts/run.sh` — executa o design (`DESIGN_FILE`) para um runtime (chamado pelos jobs em `slurm/`, que copiam o `doe/*.csv` correspondente);
 - `scripts/process_data/` — converte os traces brutos em parquets StarVZ (`trace_phase1.sh`, `parsec_phase1.sh` e os conversores `parsec_*_to_parquet.r`);
 - `scripts/analysis/` — gera as figuras a partir dos resultados/parquets. Exemplo:
 

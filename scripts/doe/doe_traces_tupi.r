@@ -15,4 +15,6 @@ design <- tribble(
   "FP64",     "getrf_nopiv",  n,  b,  "parsec", "lfq",      1,
 )
 
-write_csv(design, "doe_traces_tupi.csv", progress = FALSE)
+out_dir <- "doe"
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+write_csv(design, file.path(out_dir, "doe_traces_tupi.csv"), progress = FALSE)
