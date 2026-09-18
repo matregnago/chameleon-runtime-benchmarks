@@ -9,6 +9,7 @@
   bison,
   python3,
   fetchFromGitHub,
+  fetchgit,
   autoconf,
   automake,
   libtool,
@@ -44,7 +45,11 @@ stdenv.mkDerivation {
   pname = "parsec";
   version = "mymaster";
 
-  src = lib.cleanSource ./parsec;
+  src = fetchgit {
+    url = "https://bitbucket.org/mfaverge/parsec.git";
+    rev = "83ff82ec9176513c912d46114ca6ae211a2720ee";
+    hash = "sha256-Esp8jUM3OLtliLbsnIR1jCViEbPzZANDt9fsZkj2hys=";
+  };
 
   nativeBuildInputs = [
     cmake

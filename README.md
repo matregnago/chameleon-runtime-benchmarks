@@ -14,18 +14,21 @@ Adicione a linha a seguir em `~/.config/nix/nix.conf` ou `/etc/nix/nix.conf`:
 experimental-features = nix-command flakes
 ```
 
-3. Clonar o repositório e o checkout do Chameleon:
+3. Clonar o repositório:
 
 ```bash
-git clone https://github.com/matregnago/intro-hpc.git
-cd intro-hpc
-git clone --recurse-submodules https://github.com/matregnago/chameleon.git
+git clone https://github.com/matregnago/chameleon-runtime-benchmarks.git
+cd chameleon-runtime-benchmarks
 ```
+
+O Chameleon e o PaRSEC são baixados pelo próprio Nix (ver `chameleon.nix` e `parsec.nix`), não é preciso cloná-los à mão.
 
 4. Entrar no ambiente do `nix` de desenvolvimento:
 
 ```bash
-nix develop
+nix develop            # shell padrão: ferramentas de análise (R/StarVZ, marp, just)
+nix develop .#starpu   # shell com o Chameleon compilado sobre o StarPU
+nix develop .#parsec   # shell com o Chameleon compilado sobre o PaRSEC
 ```
 
 ## Slides

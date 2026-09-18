@@ -3,6 +3,7 @@
   lib,
   cmake,
   pkg-config,
+  fetchFromGitHub,
   gfortran,
   openblas,
   lapack,
@@ -27,7 +28,13 @@ stdenv.mkDerivation {
   pname = "chameleon-${runtime}";
   version = "1.4.0";
 
-  src = lib.cleanSource ./chameleon;
+  src = fetchFromGitHub {
+    owner = "matregnago";
+    repo = "chameleon";
+    rev = "13960d0d8e529777bd7242d9f4563253b81dcb3b";
+    fetchSubmodules = true;
+    hash = "sha256-vUTdzbaLn0eYgQU7TDdSRknFFV0MEI6h6o8DYJfP7y4=";
+  };
 
   patches = [ ./patches/chameleon.patch ];
 
