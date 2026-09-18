@@ -21,7 +21,7 @@ git clone https://github.com/matregnago/chameleon-runtime-benchmarks.git
 cd chameleon-runtime-benchmarks
 ```
 
-O Chameleon e o PaRSEC são baixados pelo próprio Nix (ver `chameleon.nix` e `parsec.nix`), não é preciso cloná-los à mão.
+O Chameleon e o PaRSEC são baixados pelo próprio Nix (ver `nix/chameleon.nix` e `nix/parsec.nix`), não é preciso cloná-los à mão.
 
 4. Entrar no ambiente do `nix` de desenvolvimento:
 

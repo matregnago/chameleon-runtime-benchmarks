@@ -18,4 +18,3 @@ sbc/*.fdb_latexmk
 sbc/*.blg
 sbc/*.bbl
 sbc/*.synctex.gz
-tarballs/

@@ -68,7 +68,7 @@ stdenv.mkDerivation {
     gtg
     cudaPackages.cuda_cudart
   ];
-  patches = [ ./patches/parsec.patch ];
+  patches = [ ../patches/parsec.patch ];
 
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=ON"

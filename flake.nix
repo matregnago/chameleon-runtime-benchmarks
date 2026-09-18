@@ -30,30 +30,25 @@
         };
       };
 
-      fxtPkg = starpu.packages.${system}.fxt.overrideAttrs (old: {
-        src = ./fxt-0.3.14.tar.gz;
-      });
-
       starpuPkg = starpu.packages.${system}.default.override {
         enableMPI = false;
         enableTrace = true;
         compileAsRelease = true;
         enableCUDA = true;
-        fxt = fxtPkg;
       };
-      parsecPkg = cudapkgs.callPackage ./parsec.nix {
+      parsecPkg = cudapkgs.callPackage ./nix/parsec.nix {
         stdenv = cudapkgs.gcc13Stdenv;
         cudaPackages = cudapkgs.cudaPackages;
       };
 
-      chameleon_starpu = cudapkgs.callPackage ./chameleon.nix {
+      chameleon_starpu = cudapkgs.callPackage ./nix/chameleon.nix {
         stdenv = cudapkgs.gcc13Stdenv;
         starpu = starpuPkg;
         parsec = parsecPkg;
         runtime = "starpu";
         cudaPackages = cudapkgs.cudaPackages;
       };
-      chameleon_parsec = cudapkgs.callPackage ./chameleon.nix {
+      chameleon_parsec = cudapkgs.callPackage ./nix/chameleon.nix {
         stdenv = cudapkgs.gcc13Stdenv;
         starpu = starpuPkg;
         parsec = parsecPkg;

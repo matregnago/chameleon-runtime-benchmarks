@@ -36,7 +36,7 @@ stdenv.mkDerivation {
     hash = "sha256-vUTdzbaLn0eYgQU7TDdSRknFFV0MEI6h6o8DYJfP7y4=";
   };
 
-  patches = [ ./patches/chameleon.patch ];
+  patches = [ ../patches/chameleon.patch ];
 
   nativeBuildInputs = [
     cmake
