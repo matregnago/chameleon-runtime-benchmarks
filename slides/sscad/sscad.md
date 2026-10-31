@@ -33,8 +33,9 @@ style: |
   .takeaway p { margin: 0; }
   section.fig { padding: 36px 60px; }
   section.fig h1 { margin-bottom: 10px; }
-  section.split { font-size: 23px; }
+  section.split { font-size: 26px; }
   section.split ul { margin-top: 4px; }
+  section.split h3 { margin-top: 24px; }
   section.cover {
     display: grid;
     grid-template-rows: 1fr auto 1fr;
@@ -52,7 +53,7 @@ style: |
 
 <div class="top small">
 
-Instituto de Informática — Universidade Federal do Rio Grande do Sul (UFRGS)
+Instituto de Informática: Universidade Federal do Rio Grande do Sul (UFRGS)
 
 </div>
 
@@ -191,8 +192,7 @@ Bloco ótimo: ***b* = 500** na poti e ***b* = 1.000** na tupi
 
 <div class="takeaway">
 
-**poti**: `parsec:gd` +4–8% (*N* ≥ 20.000) · **tupi**: StarPU sempre à frente (~30% em *N* = 40.000)
-→ contraria a expectativa: o vencedor **depende da máquina**
+Resultado: contrariando a expectativa, o PaRSEC com **gd** vence na poti (4–8% para *N* ≥ 20.000), mas o StarPU vence na tupi (~30% em *N* = 40.000)
 
 </div>
 
@@ -204,30 +204,37 @@ Bloco ótimo: ***b* = 500** na poti e ***b* = 1.000** na tupi
 
 # Onde está a diferença?
 
-GFLOPS entregues por CPU e por GPU, *N*&nbsp;=&nbsp;40.000
+GFLOPS por CPU e GPU, *N*&nbsp;=&nbsp;40.000
 
-**poti (RTX 4070)**
-- GPU quase igual nas 4 configurações (364–399 GFLOPS na Cholesky)
-- `parsec:gd` ganha **na CPU**: 607 × 542 GFLOPS do `starpu:dmda`
-- StarPU reserva **1 thread por worker CUDA**; PaRSEC despacha a GPU a partir do próprio worker
+### poti (RTX 4070)
 
-**tupi (RTX 4090)**
-- GPU domina: >1.100 GFLOPS no StarPU × 942 no `parsec:gd`
-- CPUs do `parsec:gd` ociosas em **~50%** do makespan (StarPU: <10%)
+- A GPU entrega quase o mesmo nas 4 configurações
+- O PaRSEC com **gd** ganha na CPU: o StarPU reserva **1 thread por worker CUDA**
+
+### tupi (RTX 4090)
+
+- As CPUs do **gd** ficam ociosas em **metade** do tempo, contra menos de 10% no StarPU
+- O StarPU também extrai mais da GPU
 
 ---
 
 <!-- _class: split -->
 
-![bg right:60% fit](../../plots/final/traces_poti_812152/st_compare_dpotrf.png)
+![bg right:55% fit](../../plots/final/traces_poti_812152/st_compare_dpotrf.png)
 
 # Espaço-tempo
 
-Cholesky na poti, *N* = 40.000, *b* = 500
+Cholesky na poti, com *N* = 40.000
 
-- Linhas: 19 workers de CPU + 4 streams de GPU; cor = tipo de tarefa
-- StarPU e `parsec:gd`: CPUs saturadas, **1,6–8,7%** de ociosidade
-- `parsec:lfq`: lacunas recorrentes, **13,9%** de ociosidade → menor parcela de CPU (534 GFLOPS)
+- Cada linha é um worker de CPU ou um stream de GPU, e a cor indica o tipo de tarefa
+- **StarPU** e **gd**: CPUs saturadas, com até 8,7% de ociosidade
+- **lfq**: lacunas recorrentes, com 13,9% de ociosidade
+
+<div class="takeaway">
+
+Por isso o **lfq** tem a menor parcela de CPU
+
+</div>
 
 ---
 
@@ -235,11 +242,11 @@ Cholesky na poti, *N* = 40.000, *b* = 500
 
 # Progressão das iterações (Cholesky, poti)
 
-![center h:440](../../plots/final/traces_poti_812152/kiteration_compare_dpotrf.png)
+![center h:400](../../plots/final/traces_poti_812152/kiteration_compare_dpotrf.png)
 
 <div class="takeaway">
 
-Iterações simultâneas em média: `dmda` **1,9** · `dmdas` **28,7** (adianta o caminho crítico) · PaRSEC **7,7** e **9,3** (tarefas retardatárias retidas nas filas)
+Iterações simultâneas: o **dmdas** prioriza o caminho crítico e adianta tarefas de iterações futuras (28,7 em média, contra 1,9 do **dmda**). No PaRSEC (7,7 e 9,3), tarefas atrasadas de iterações antigas ficam retidas nas filas
 
 </div>
 
@@ -248,14 +255,15 @@ Iterações simultâneas em média: `dmda` **1,9** · `dmdas` **28,7** (adianta 
 # Conclusões
 
 - StarPU é **superior ou equivalente** na maior parte dos casos
-- A exceção depende do **equilíbrio CPU × GPU** da máquina:
-  - **poti**: GPU ≈ metade da CPU → `parsec:gd` +4–8%, por não reservar threads de CPU para a GPU
-  - **tupi**: GPU ≈ 2× a CPU → StarPU ~30% melhor, extraindo mais da GPU
-- Não decide a eficiência na GPU, e sim **quanto sobra de CPU**
+- A exceção depende do **equilíbrio entre CPU e GPU** da máquina:
+  - **poti**: GPU vale cerca de metade da CPU, e o PaRSEC com **gd** ganha 4–8%
+  - **tupi**: GPU vale quase o dobro da CPU, e o StarPU vence em toda a faixa (~30% em *N* = 40.000)
+- Na poti, o que decide não é a eficiência na GPU, e sim **quanto sobra de CPU**
 
 <div class="small">
 
-**Trabalhos futuros**
+### Trabalhos futuros
+
 - Medir a duração das tarefas de GPU no próprio dispositivo no PaRSEC
 - Mais combinações de CPU e GPU, para achar o limiar da inversão
 - Ambientes multi-nó e multi-GPU
@@ -285,9 +293,9 @@ Iterações simultâneas em média: `dmda` **1,9** · `dmdas` **28,7** (adianta 
 
 # Agradecimentos
 
-- **PCAD** — Parque Computacional de Alto Desempenho do INF/UFRGS, onde foram realizados todos os experimentos (pcad.inf.ufrgs.br)
-- **Petrobras** — financiamento parcial, por meio de acordo com a UFRGS (projetos 2020/00182-5 e 2018/00263-5)
-- **CAPES** — Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (Código de Financiamento 001)
+- **PCAD**: Parque Computacional de Alto Desempenho do INF/UFRGS, onde foram realizados todos os experimentos (pcad.inf.ufrgs.br)
+- **Petrobras**: financiamento parcial, por meio de acordo com a UFRGS (projetos 2020/00182-5 e 2018/00263-5)
+- **CAPES**: Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (Código de Financiamento 001)
 
 ---
 
@@ -296,7 +304,7 @@ Iterações simultâneas em média: `dmda` **1,9** · `dmdas` **28,7** (adianta 
 
 <div class="top small">
 
-Instituto de Informática — Universidade Federal do Rio Grande do Sul (UFRGS)
+Instituto de Informática: Universidade Federal do Rio Grande do Sul (UFRGS)
 
 </div>
 
