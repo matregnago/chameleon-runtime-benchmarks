@@ -33,13 +33,39 @@ nix develop .#parsec   # shell com o Chameleon compilado sobre o PaRSEC
 
 ## Slides
 
-Os slides estão localizados na pasta `slides`. Eles são escritos em `markdown` e compilados para pdf com o [Marp](https://marp.app) a partir dos seguintes comandos:
+Os slides ficam na pasta `slides`, com uma subpasta por apresentação (`proposta`, `parcial`, `final`, `sscad`). Cada uma tem um `<nome>.md`, escrito em `markdown` para o [Marp](https://marp.app), e o `<nome>.pdf` já compilado.
+
+### Slides do SSCAD
+
+O `marp`, o `chromium` (usado pelo Marp para gerar o PDF) e o `just` vêm no shell padrão do Nix. Para compilar, rode a partir da raiz do repositório:
 
 ```bash
-cd slides/part1
-marp --pdf part1.md --allow-local-files
+nix develop
+just slides            # compila slides/sscad/sscad.md -> slides/sscad/sscad.pdf
 ```
-Isso gera um arquivo chamado `part1.pdf`.
+
+Ou, sem entrar no shell:
+
+```bash
+nix develop -c just slides
+```
+
+Os slides usam as figuras de `plots/final/` (caminhos relativos `../../plots/final/...`), que já estão versionadas, então não é preciso ter os dados para compilar. Por isso a flag `--allow-local-files` é obrigatória: sem ela o Marp não carrega as imagens no PDF. Para regenerar as figuras a partir dos dados, veja os scripts em `scripts/analysis/` (seção abaixo).
+
+Para recompilar automaticamente a cada vez que o `.md` for salvo:
+
+```bash
+marp --pdf --allow-local-files --watch slides/sscad/sscad.md -o slides/sscad/sscad.pdf
+```
+
+### Outras apresentações
+
+A mesma receita funciona para as outras pastas, passando o nome:
+
+```bash
+just slides proposta   # slides/proposta/proposta.md -> slides/proposta/proposta.pdf
+just slides final
+```
 
 ## DOE e Análise dos Dados
 Os scripts estão na pasta `scripts`:
