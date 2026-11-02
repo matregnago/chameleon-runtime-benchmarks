@@ -256,8 +256,8 @@ Iterações simultâneas: o **dmdas** prioriza o caminho crítico e adianta tare
 
 - StarPU é **superior ou equivalente** na maior parte dos casos
 - A exceção depende do **equilíbrio entre CPU e GPU** da máquina:
-  - **poti**: GPU vale cerca de metade da CPU, e o PaRSEC com **gd** ganha 4–8%
-  - **tupi**: GPU vale quase o dobro da CPU, e o StarPU vence em toda a faixa (~30% em *N* = 40.000)
+  - **poti**: a CPU entrega mais GFLOPS que a GPU (~550 contra ~390 no StarPU), e o PaRSEC com **gd** ganha 4–8%
+  - **tupi**: a GPU entrega mais GFLOPS que a CPU (~1.110 contra ~670 no StarPU), e o StarPU vence em toda a faixa (~30% em *N* = 40.000)
 - Na poti, o que decide não é a eficiência na GPU, e sim **quanto sobra de CPU**
 
 <div class="small">
