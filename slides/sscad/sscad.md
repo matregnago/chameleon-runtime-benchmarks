@@ -155,7 +155,6 @@ Expectativa: O StarPU deve apresentar um desempenho superior ao PaRSEC, por cont
 | CPU | i7-14700KF, 20 núcleos (8 P-cores) | i9-14900KF, 24 núcleos (8 P-cores) |
 | RAM | 96 GB | 128 GB |
 | GPU | RTX 4070, 12 GB | RTX 4090, 24 GB |
-| Pico FP64 da GPU | **455 GFLOPS** | **1.290 GFLOPS** |
 
 <div class="small">
 
